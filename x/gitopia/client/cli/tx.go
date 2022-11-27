@@ -1,0 +1,118 @@
+package cli
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/spf13/cobra"
+
+	"github.com/cosmos/cosmos-sdk/client"
+	// "github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/gitopia/gitopia/x/gitopia/types"
+)
+
+var (
+	DefaultRelativePacketTimeoutTimestamp = uint64((time.Duration(10) * time.Minute).Nanoseconds())
+)
+
+const (
+	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
+	flagExpiration             = "expiration"
+)
+
+// GetTxCmd returns the transaction commands for this module
+func GetTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        types.ModuleName,
+		Short:                      fmt.Sprintf("%s transactions subcommands", types.ModuleName),
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	cmd.AddCommand(CmdToggleArweaveBackup())
+
+	cmd.AddCommand(CmdAuthorizeProvider())
+	cmd.AddCommand(CmdRevokeProviderPermission())
+
+	cmd.AddCommand(CmdCreateTask())
+	cmd.AddCommand(CmdUpdateTask())
+	cmd.AddCommand(CmdDeleteTask())
+
+	cmd.AddCommand(CmdSetBranch())
+	cmd.AddCommand(CmdSetDefaultBranch())
+	cmd.AddCommand(CmdDeleteBranch())
+
+	cmd.AddCommand(CmdSetTag())
+	cmd.AddCommand(CmdDeleteTag())
+
+	cmd.AddCommand(CmdAddMember())
+	cmd.AddCommand(CmdUpdateMemberRole())
+	cmd.AddCommand(CmdRemoveMember())
+	cmd.AddCommand(CmdUpdateRepositoryBackupRef())
+	cmd.AddCommand(CmdAddRepositoryBackupRef())
+	// this line is used by starport scaffolding # 1
+
+	cmd.AddCommand(CmdCreateRelease())
+	cmd.AddCommand(CmdUpdateRelease())
+	cmd.AddCommand(CmdDeleteRelease())
+
+	cmd.AddCommand(CmdCreatePullRequest())
+	cmd.AddCommand(CmdUpdatePullRequestTitle())
+	cmd.AddCommand(CmdUpdatePullRequestDescription())
+	cmd.AddCommand(CmdInvokeMergePullRequest())
+	cmd.AddCommand(CmdSetPullRequestState())
+	cmd.AddCommand(CmdAddPullRequestAssignees())
+	cmd.AddCommand(CmdRemovePullRequestAssignees())
+	cmd.AddCommand(CmdAddPullRequestReviewers())
+	cmd.AddCommand(CmdRemovePullRequestReviewers())
+	cmd.AddCommand(CmdAddPullRequestLabels())
+	cmd.AddCommand(CmdRemovePullRequestLabels())
+	cmd.AddCommand(CmdDeletePullRequest())
+
+	cmd.AddCommand(CmdCreateDao())
+	cmd.AddCommand(CmdRenameDao())
+	cmd.AddCommand(CmdUpdateDaoDescription())
+	cmd.AddCommand(CmdUpdateDaoWebsite())
+	cmd.AddCommand(CmdUpdateDaoLocation())
+	cmd.AddCommand(CmdUpdateDaoAvatar())
+	cmd.AddCommand(CmdDeleteDao())
+
+	cmd.AddCommand(CmdCreateComment())
+	cmd.AddCommand(CmdUpdateComment())
+	cmd.AddCommand(CmdDeleteComment())
+
+	cmd.AddCommand(CmdCreateIssue())
+	cmd.AddCommand(CmdUpdateIssueTitle())
+	cmd.AddCommand(CmdUpdateIssueDescription())
+	cmd.AddCommand(CmdToggleIssueState())
+	cmd.AddCommand(CmdAddIssueAssignees())
+	cmd.AddCommand(CmdRemoveIssueAssignees())
+	cmd.AddCommand(CmdAddIssueLabels())
+	cmd.AddCommand(CmdRemoveIssueLabels())
+	cmd.AddCommand(CmdDeleteIssue())
+
+	cmd.AddCommand(CmdCreateRepository())
+	cmd.AddCommand(CmdInvokeForkRepository())
+	cmd.AddCommand(CmdForkRepository())
+	cmd.AddCommand(CmdRenameRepository())
+	cmd.AddCommand(CmdUpdateRepositoryDescription())
+	cmd.AddCommand(CmdChangeOwner())
+	cmd.AddCommand(CmdUpdateRepositoryCollaborator())
+	cmd.AddCommand(CmdRemoveRepositoryCollaborator())
+	cmd.AddCommand(CmdCreateRepositoryLabel())
+	cmd.AddCommand(CmdUpdateRepositoryLabel())
+	cmd.AddCommand(CmdDeleteRepositoryLabel())
+	cmd.AddCommand(CmdToggleRepositoryForking())
+	cmd.AddCommand(CmdDeleteRepository())
+
+	cmd.AddCommand(CmdCreateUser())
+	cmd.AddCommand(CmdUpdateUserUsername())
+	cmd.AddCommand(CmdUpdateUserName())
+	cmd.AddCommand(CmdUpdateUserBio())
+	cmd.AddCommand(CmdUpdateUserAvatar())
+	cmd.AddCommand(CmdDeleteUser())
+	// cmd.AddCommand(CmdTransferUser())
+
+	return cmd
+}

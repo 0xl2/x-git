@@ -1,0 +1,9 @@
+vue/node_modules
+vue/dist
+secret.yml
+build
+launch.json
+
+docs
+
+.DS_Store
